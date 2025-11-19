@@ -23,3 +23,26 @@ def binary_to_text(bits):
         text = chr(int(byte, 2))
     return text
 
+#now we make the function that does the actual encoding process
+def encode_message():
+    print("\n--- ENCODING ---")
+    bmp_name = input("Enter BMP file name to encode into: ")
+
+    #now we attempt to read the BMP file and make sure a message is entered for the encoding process to work
+    try:
+        with open(bmp_name, "rb") as f:
+            bmp_bytes = bytearray(f.read())
+    except:
+        print("Error: File not found.")
+        return
+    
+    message = input("Enter the secret message to hide: ")
+    if message == "":
+        print("Error: please input a message to hide")
+        return
+    
+    #here we convert the message into binary using the function we made and store it into a variable
+    message_bits = text_to_binary(message)
+    
+
+
