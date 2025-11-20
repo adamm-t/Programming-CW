@@ -81,6 +81,26 @@ def decode_message():
     pixel_index = header_size
     bits_collected = ""
 
+#now we have a loop that increments through each pixel and adds our bit to the string until it finds the terminator and stops
+    while True:
+        lsb = bmp_bytes[pixel_index] & 1
+        bits_collected += str(lsb)
+        pixel_index += 1
+
+        if bits_collected.endswith(terminator):
+            break
+
+#check if we reached the end of the file and still didnt find the terminator so an error has occured
+        if pixel_index >= len(bmp_bytes):
+            print("Error: No terminator found, file may be corrupted.")
+            return
+
+#here we slice our bits and remove the terminator so it doesnt affect the message       
+    bits_collected = bits_collected[:-8]
+
+#call the function that converts our bits to text and store it in a variable and print it for the user to see
+    hidden_message = binary_to_text(bits_collected)
+    print(f"Your secret message is {hidden_message}")
 
 
 
