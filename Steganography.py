@@ -20,7 +20,7 @@ def binary_to_text(bits):
     text = ""
     for i in range(0, len(bits),8):
         byte = bits[i:i+8]
-        text = chr(int(byte, 2))
+        text += chr(int(byte, 2))
     return text
 
 #now we make the function that does the actual encoding process
@@ -103,5 +103,26 @@ def decode_message():
     print(f"Your secret message is {hidden_message}")
 
 
+#lastly we will make our main menu that lets the user choose what mode they want to use in our program
+def menu():
+    while True:
+        print("\n======== Adam's Steganography Program ========")
+        print("1 - Encode message into a bitmap image")
+        print("2 - decode message from a bitmap image")
+        print("3 - Exit")
+        print("==============================================")
 
+        choice = input("Enter your selection: ")
+
+        if choice == "1":
+            encode_message()
+        elif choice == "2":
+            decode_message()
+        elif choice == "3":
+            print("Closing Program.")
+        else:
+            print("Please choose a valid option.")
+
+#here we call the menu function so that the program begins and lets the user choose their mode
+menu()
 
