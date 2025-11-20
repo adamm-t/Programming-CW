@@ -15,7 +15,7 @@ def text_to_binary(text):
         bits += format(ord(char), "08b")
     return bits + terminator
 
-#now we make a function that converts from binary back to text which will be used in decoding
+#now we make a function that converts from binary (8 bits at a time) to text  which will be used in decoding
 def binary_to_text(bits):
     text = ""
     for i in range(0, len(bits),8):
@@ -57,6 +57,30 @@ def encode_message():
         bmp_bytes[pixel_index] |= int(bit)
         pixel_index += 1
     
+#here we save our new image which contains the message as a new file with a different name   
+    output_name = "new_image_" + bmp_name
+    with open(output_name, "wb") as f:
+        f.write(bmp_bytes)
+
+    print(f"Message encoded successfully into: {output_name}")
+
+#encoding function is done so now we make the decoder
+def decode_message():
+    print("\n--- DECODING ---")
+    bmp_name = input("Enter BMP file name to decode message from: ")
+
+#here we will attempt to read from the BMP file all the bits
+    try:
+        with open(bmp_name, "rb") as f:
+            bmp_bytes = f.read()
+    except:
+        print("Error: File not found.")
+        return
+
+#we make sure to set our constants like the header size and an empty string that will contain the bits from our message    
+    pixel_index = header_size
+    bits_collected = ""
+
 
 
 
