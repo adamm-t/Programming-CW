@@ -2,7 +2,7 @@
 #Adam Tamer 202400705
 
 #we will define the constants first
-terminator = "00000000"
+terminator = "01111110"
 header_size = 54
 
 
@@ -28,14 +28,19 @@ def encode_message():
     print("\n--- ENCODING ---")
     bmp_name = input("Enter BMP file name to encode into: ")
 
-#now we attempt to read the BMP file and make sure a message is entered for the encoding process to work
+#now we attempt to read the BMP file and check that a BMP file is being used and return error if not found 
     try:
         with open(bmp_name, "rb") as f:
             bmp_bytes = bytearray(f.read())
+            
+        if bmp_bytes[0:2] != b"BM":
+            print("Error: File is not a BMP image.")
+            return
     except:
         print("Error: File not found.")
         return
-    
+
+#we have make sure a message is entered for the encoding process to work
     message = input("Enter the secret message to hide: ")
     if message == "":
         print("Error: please input a message to hide")
@@ -69,10 +74,14 @@ def decode_message():
     print("\n--- DECODING ---")
     bmp_name = input("Enter BMP file name to decode message from: ")
 
-#here we will attempt to read from the BMP file all the bits
+#here we will attempt to read from the BMP file all the bits and make sure to check for the same errors again
     try:
         with open(bmp_name, "rb") as f:
             bmp_bytes = f.read()
+
+        if bmp_bytes[0:2] != b"BM":
+            print("Error: File is not a BMP image.")
+            return
     except:
         print("Error: File not found.")
         return
@@ -120,6 +129,7 @@ def menu():
             decode_message()
         elif choice == "3":
             print("Closing Program.")
+            exit()
         else:
             print("Please choose a valid option.")
 
