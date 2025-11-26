@@ -63,7 +63,7 @@ def encode_message():
         pixel_index += 1
     
 #here we save our new image which contains the message as a new file with a different name   
-    output_name = "new_image_" + bmp_name
+    output_name = "modified_" + bmp_name
     with open(output_name, "wb") as f:
         f.write(bmp_bytes)
 
