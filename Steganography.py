@@ -28,7 +28,7 @@ def encode_message():
     print("\n--- ENCODING ---")
     bmp_name = input("Enter BMP file name to encode into: ")
 
-#now we attempt to read the BMP file and check that a BMP file is being used and return error if not found 
+#now we attempt to read the BMP file and check that a BMP file is being used by looking for the BM signature in the first 2 bytes and return error if not found 
     try:
         with open(bmp_name, "rb") as f:
             bmp_bytes = bytearray(f.read())
@@ -40,10 +40,36 @@ def encode_message():
         print("Error: File not found.")
         return
 
-#we have make sure a message is entered for the encoding process to work
-    message = input("Enter the secret message to hide: ")
-    if message == "":
-        print("Error: please input a message to hide")
+#here we take the message from the user either as a direct input or read from a file (dual input method)
+    print("\nHow would you like to input the secret message?")
+    print("1 - Type the message manually")
+    print("2 - Read the message from a text file")
+    choice = input("Enter your choice (1 or 2): ")
+
+    if choice == "1":
+        message = input("Enter the secret message to hide: ")
+        if message == "":
+            print("Error: please input a message to hide")
+            return
+
+    elif choice == "2":
+        file_name = input("Enter the text file name: ")
+
+        try:
+            with open(file_name, "r", encoding="utf-8") as f:       #we open the file and read with utf-8 encoding which is the best option since it will read almost all possible characters that are used
+                message = f.read().strip()                          #strip() will remove anything we dont need that is before or after the message like spaces
+        except:
+            print("Error: Could not read the text file.")
+            return
+
+        if message == "":
+            print("Error: the text file is empty.")
+            return
+
+        print(f"Loaded message ({len(message)} characters) from file.") #print the length of the message for the user to see how long it is
+
+    else:
+        print("Invalid choice.")
         return
     
 #here we convert the message into binary using the function we made and store it into a variable
