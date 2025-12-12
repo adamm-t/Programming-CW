@@ -135,7 +135,7 @@ def decode_message():
 
 #call the function that converts our bits to text and store it in a variable and print it for the user to see
     hidden_message = binary_to_text(bits_collected)
-    print(f"Your secret message is {hidden_message}")
+    print(f"Your secret message is:\n{hidden_message}")
 
 
 #lastly we will make our main menu that lets the user choose what mode they want to use in our program
